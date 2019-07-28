@@ -22,7 +22,7 @@ namespace Skybrud.Social.Dropbox.Responses.Authentication {
         public static DropboxTokenResponse ParseResponse(IHttpResponse response) {
 
             // Some input validation
-            if (response == null) throw new ArgumentNullException("response");
+            if (response == null) throw new ArgumentNullException(nameof(response));
             
             // Validate the response
             ValidateResponse(response);

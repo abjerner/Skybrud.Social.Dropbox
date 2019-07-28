@@ -1,5 +1,4 @@
-﻿using System;
-using Skybrud.Essentials.Http.Collections;
+﻿using Skybrud.Essentials.Http.Collections;
 using Skybrud.Essentials.Http.Options;
 
 namespace Skybrud.Social.Dropbox.Options {
@@ -46,7 +45,7 @@ namespace Skybrud.Social.Dropbox.Options {
             // Construct the query string
             IHttpQueryString query = new HttpQueryString();
             if (FileLimit > 0) query.Set("file_limit", FileLimit);
-            if (!String.IsNullOrWhiteSpace(Hash)) query.Set("hash", Hash);
+            if (!string.IsNullOrWhiteSpace(Hash)) query.Set("hash", Hash);
             if (!List) query.Set("list", "false");
 
             return query;

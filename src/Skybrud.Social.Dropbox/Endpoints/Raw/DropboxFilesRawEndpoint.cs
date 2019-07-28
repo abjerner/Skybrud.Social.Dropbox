@@ -12,7 +12,7 @@ namespace Skybrud.Social.Dropbox.Endpoints.Raw {
         /// <summary>
         /// Gets a reference to the parent OAuth client.
         /// </summary>
-        public DropboxOAuthClient Client { get; private set; }
+        public DropboxOAuthClient Client { get; }
 
         #endregion
 
@@ -27,8 +27,8 @@ namespace Skybrud.Social.Dropbox.Endpoints.Raw {
         #region Member methods
 
         public IHttpResponse GetMetadata(string path, DropboxGetMetadataOptions options) {
-            if (String.IsNullOrWhiteSpace(path)) throw new ArgumentNullException("path");
-            if (options == null) throw new ArgumentNullException("options");
+            if (string.IsNullOrWhiteSpace(path)) throw new ArgumentNullException(nameof(path));
+            if (options == null) throw new ArgumentNullException(nameof(options));
             return Client.Get("https://api.dropboxapi.com/1/metadata/" + path, options);
         }
 

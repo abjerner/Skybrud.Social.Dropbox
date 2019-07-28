@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Specialized;
-using System.Net;
 using Skybrud.Essentials.Http;
 using Skybrud.Essentials.Http.Client;
 using Skybrud.Essentials.Http.Collections;
@@ -40,7 +38,7 @@ namespace Skybrud.Social.Dropbox.OAuth {
 
         #region Endpoints
 
-        public DropboxFilesRawEndpoint Files { get; private set; }
+        public DropboxFilesRawEndpoint Files { get; }
         
         #endregion
 
@@ -120,7 +118,7 @@ namespace Skybrud.Social.Dropbox.OAuth {
         ///     <cref>https://www.dropbox.com/developers-v1/core/docs#oa2-authorize</cref>
         /// </see>
         public string GetAuthorizationUrl(string state) {
-            return String.Format(
+            return string.Format(
                 "https://www.dropbox.com/1/oauth2/authorize?response_type={0}&client_id={1}&redirect_uri={2}&state={3}",
                 "code",
                 ClientId,
@@ -143,7 +141,7 @@ namespace Skybrud.Social.Dropbox.OAuth {
         ///     <cref>https://www.dropbox.com/developers-v1/core/docs#oa2-authorize</cref>
         /// </see>
         public string GetAuthorizationUrl(string state, bool forceReapprove) {
-            return String.Format(
+            return string.Format(
                 "https://www.dropbox.com/1/oauth2/authorize?response_type={0}&client_id={1}&redirect_uri={2}&state={3}&force_reapprove={4}",
                 "code",
                 ClientId,

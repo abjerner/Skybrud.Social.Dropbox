@@ -10,11 +10,11 @@ namespace Skybrud.Social.Dropbox.Objects.Authentication {
 
         #region Properties
 
-        public string AccessToken { get; private set; }
+        public string AccessToken { get; }
 
-        public string TokenType { get; private set; }
+        public string TokenType { get; }
 
-        public string UserId { get; private set; }
+        public string UserId { get; }
 
         #endregion
 

@@ -6,7 +6,7 @@ namespace Skybrud.Social.Dropbox.Objects {
 
         #region Properties
 
-        public JObject JObject { get; private set; }
+        public JObject JObject { get; }
 
         #endregion
 
