@@ -1,10 +1,10 @@
 ﻿using System;
-using Skybrud.Social.Http;
-using Skybrud.Social.Interfaces;
+using Skybrud.Essentials.Http.Collections;
+using Skybrud.Essentials.Http.Options;
 
 namespace Skybrud.Social.Dropbox.Options {
     
-    public class DropboxGetMetadataOptions : IGetOptions {
+    public class DropboxGetMetadataOptions : IHttpGetOptions {
 
         #region Properties
 
@@ -41,10 +41,10 @@ namespace Skybrud.Social.Dropbox.Options {
 
         #region Member methods
 
-        public SocialQueryString GetQueryString() {
+        public IHttpQueryString GetQueryString() {
 
             // Construct the query string
-            SocialQueryString query = new SocialQueryString();
+            IHttpQueryString query = new HttpQueryString();
             if (FileLimit > 0) query.Set("file_limit", FileLimit);
             if (!String.IsNullOrWhiteSpace(Hash)) query.Set("hash", Hash);
             if (!List) query.Set("list", "false");

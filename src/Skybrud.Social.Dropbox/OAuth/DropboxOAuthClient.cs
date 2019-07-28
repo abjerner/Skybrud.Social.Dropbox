@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Collections.Specialized;
 using System.Net;
+using Skybrud.Essentials.Http;
+using Skybrud.Essentials.Http.Client;
+using Skybrud.Essentials.Http.Collections;
+using Skybrud.Essentials.Http.Options;
 using Skybrud.Social.Dropbox.Endpoints.Raw;
 using Skybrud.Social.Dropbox.Responses.Authentication;
-using Skybrud.Social.Http;
-using Skybrud.Social.Interfaces;
 
 namespace Skybrud.Social.Dropbox.OAuth {
     
-    public class DropboxOAuthClient {
+    public class DropboxOAuthClient : HttpClient {
 
         #region Properties
 
@@ -159,7 +161,7 @@ namespace Skybrud.Social.Dropbox.OAuth {
         public DropboxTokenResponse GetAccessTokenFromAuthCode(string authCode) {
 
             // Initialize the POST data
-            NameValueCollection data = new NameValueCollection {
+            IHttpPostData data = new HttpPostData {
                 {"code", authCode},
                 {"grant_type", "authorization_code"},
                 {"client_id", ClientId},
@@ -167,62 +169,27 @@ namespace Skybrud.Social.Dropbox.OAuth {
                 {"redirect_uri", RedirectUri}
             };
 
-            // Make the call to the API
-            HttpWebResponse response = SocialUtils.DoHttpPostRequest("https://api.dropboxapi.com/1/oauth2/token", null, data);
-
-            // Wrap the native response class
-            SocialHttpResponse social = SocialHttpResponse.GetFromWebResponse(response);
+            // Make the request to the API
+            IHttpResponse response = HttpUtils.Requests.Post("https://api.dropboxapi.com/1/oauth2/token", null, data);
 
             // Parse the response
-            return DropboxTokenResponse.ParseResponse(social);
+            return DropboxTokenResponse.ParseResponse(response);
 
         }
 
-        /// <summary>
-        /// Makes an authenticated GET request to the specified URL. The access token is automatically appended to the query string.
-        /// </summary>
-        /// <param name="url">The URL to call.</param>
-        public SocialHttpResponse DoAuthenticatedGetRequest(string url) {
-            return DoAuthenticatedGetRequest(url, default(SocialQueryString));
-        }
-
-        /// <summary>
-        /// Makes an authenticated GET request to the specified URL. The access token is automatically appended to the query string.
-        /// </summary>
-        /// <param name="url">The URL to call.</param>
-        /// <param name="options">The options for the call to the API.</param>
-        public SocialHttpResponse DoAuthenticatedGetRequest(string url, IGetOptions options) {
-            return DoAuthenticatedGetRequest(url, options == null ? null : options.GetQueryString());
-        }
-
-        /// <summary>
-        /// Makes an authenticated GET request to the specified URL. The access token is automatically appended to the query string.
-        /// </summary>
-        /// <param name="url">The URL to call.</param>
-        /// <param name="query">The query string for the call.</param>
-        public SocialHttpResponse DoAuthenticatedGetRequest(string url, SocialQueryString query) {
-
-            // Initialize a new SocialQueryString if NULL
-            if (query == null) query = new SocialQueryString();
+        protected override void PrepareHttpRequest(IHttpRequest request) {
 
             // Append the access token to the query string if present in the client and not already
             // specified in the query string
-            if (!query.ContainsKey("access_token") && !String.IsNullOrWhiteSpace(AccessToken)) {
-                query.Add("access_token", AccessToken);
+            if ((request.QueryString == null || string.IsNullOrWhiteSpace(request.QueryString["access_token"])) && string.IsNullOrWhiteSpace(AccessToken) == false) {
+                request.QueryString = request.QueryString ?? new HttpQueryString();
+                request.QueryString.Add("access_token", AccessToken);
             }
 
-            // Configure the request
-            SocialHttpRequest request = new SocialHttpRequest {
-                Method = "GET",
-                Url = url,
-                QueryString = query
-            };
+        }
 
-            // Set headers of the request
-
-            // Make a call to the API
-            return request.GetResponse();
-
+        public IHttpResponse Get(string url, IHttpGetOptions options) {
+            return DoHttpGetRequest(url, options);
         }
 
         #endregion

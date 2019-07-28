@@ -1,7 +1,7 @@
 ﻿using System;
+using Skybrud.Essentials.Http;
 using Skybrud.Social.Dropbox.OAuth;
 using Skybrud.Social.Dropbox.Options;
-using Skybrud.Social.Http;
 
 namespace Skybrud.Social.Dropbox.Endpoints.Raw {
     
@@ -26,10 +26,10 @@ namespace Skybrud.Social.Dropbox.Endpoints.Raw {
 
         #region Member methods
 
-        public SocialHttpResponse GetMetadata(string path, DropboxGetMetadataOptions options) {
+        public IHttpResponse GetMetadata(string path, DropboxGetMetadataOptions options) {
             if (String.IsNullOrWhiteSpace(path)) throw new ArgumentNullException("path");
             if (options == null) throw new ArgumentNullException("options");
-            return Client.DoAuthenticatedGetRequest("https://api.dropboxapi.com/1/metadata/" + path, options);
+            return Client.Get("https://api.dropboxapi.com/1/metadata/" + path, options);
         }
 
         #endregion

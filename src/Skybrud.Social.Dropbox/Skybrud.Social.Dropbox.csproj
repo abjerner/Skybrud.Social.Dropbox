@@ -35,8 +35,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="6.0.5" />
-    <PackageReference Include="Skybrud.Social" Version="0.9.4.1" />
+    <PackageReference Include="Skybrud.Essentials" Version="1.1.12" />
+    <PackageReference Include="Skybrud.Essentials.Http" Version="1.0.5" />
   </ItemGroup>
 
 </Project>

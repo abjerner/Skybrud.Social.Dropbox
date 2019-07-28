@@ -1,6 +1,6 @@
 ﻿using System;
+using Skybrud.Essentials.Http;
 using Skybrud.Social.Dropbox.Objects.Authentication;
-using Skybrud.Social.Http;
 
 namespace Skybrud.Social.Dropbox.Responses.Authentication {
     
@@ -8,7 +8,7 @@ namespace Skybrud.Social.Dropbox.Responses.Authentication {
         
         #region Constructors
 
-        private DropboxTokenResponse(SocialHttpResponse response) : base(response) { }
+        private DropboxTokenResponse(IHttpResponse response) : base(response) { }
 
         #endregion
 
@@ -19,7 +19,7 @@ namespace Skybrud.Social.Dropbox.Responses.Authentication {
         /// </summary>
         /// <param name="response">The response to be parsed.</param>
         /// <returns>Returns an instance of <code>DropboxTokenResponse</code>.</returns>
-        public static DropboxTokenResponse ParseResponse(SocialHttpResponse response) {
+        public static DropboxTokenResponse ParseResponse(IHttpResponse response) {
 
             // Some input validation
             if (response == null) throw new ArgumentNullException("response");
@@ -29,7 +29,7 @@ namespace Skybrud.Social.Dropbox.Responses.Authentication {
 
             // Initialize the response object
             return new DropboxTokenResponse(response) {
-                Body = SocialUtils.ParseJsonObject(response.Body, DropboxTokenResponseBody.Parse)
+                Body = ParseJsonObject(response.Body, DropboxTokenResponseBody.Parse)
             };
 
         }
