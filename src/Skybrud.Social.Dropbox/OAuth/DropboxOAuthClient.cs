@@ -1,4 +1,5 @@
 ﻿using System;
+using Skybrud.Essentials.Common;
 using Skybrud.Essentials.Http;
 using Skybrud.Essentials.Http.Client;
 using Skybrud.Essentials.Http.Collections;
@@ -110,53 +111,76 @@ namespace Skybrud.Social.Dropbox.OAuth {
         #region Methods
 
         /// <summary>
-        /// Generates the authorization URL using the specified state and scope.
+        /// Generates the authorization URL based on the <see cref="ClientId"/> and <see cref="RedirectUri"/> properties as well as the <paramref name="state"/> parameter.
         /// </summary>
-        /// <param name="state">The state to send to the Microsoft OAuth login page.</param>
-        /// <returns>Returns an authorization URL based on the specified <code>state</code>.</returns>
+        /// <param name="state">Up to 500 bytes of arbitrary data that will be passed back to your redirect URI. This
+        /// parameter should be used to protect against cross-site request forgery (CSRF).</param>
+        /// <returns>An authorization URL based on the specified <paramref name="state"/>.</returns>
         /// <see>
-        ///     <cref>https://www.dropbox.com/developers-v1/core/docs#oa2-authorize</cref>
+        ///     <cref>https://www.dropbox.com/developers/documentation/http/documentation#oauth2-authorize</cref>
         /// </see>
         public string GetAuthorizationUrl(string state) {
-            return string.Format(
-                "https://www.dropbox.com/1/oauth2/authorize?response_type={0}&client_id={1}&redirect_uri={2}&state={3}",
-                "code",
-                ClientId,
-                RedirectUri,
-                state
-            );
+
+            if (string.IsNullOrWhiteSpace(ClientId)) throw new PropertyNotSetException(nameof(ClientId));
+            if (string.IsNullOrWhiteSpace(RedirectUri)) throw new PropertyNotSetException(nameof(RedirectUri));
+            if (string.IsNullOrWhiteSpace(state)) throw new ArgumentNullException(nameof(state));
+
+            IHttpQueryString query = new HttpQueryString {
+                {"response_type", "code"},
+                {"client_id", ClientId},
+                {"redirect_uri", RedirectUri},
+                {"state", state}
+            };
+
+            return "https://www.dropbox.com/oauth2/authorize?" + query;
+
         }
 
         /// <summary>
-        /// Generates the authorization URL using the specified state and scope.
+        /// Generates the authorization URL based on the <see cref="ClientId"/> and <see cref="RedirectUri"/> properties as well as the <paramref name="state"/> parameter.
         /// </summary>
         /// <param name="state">Up to 500 bytes of arbitrary data that will be passed back to your redirect URI. This
         /// parameter should be used to protect against cross-site request forgery (CSRF).</param>
         /// <param name="forceReapprove">Whether or not to force the user to approve the app again if they've already
-        /// done so. If <code>false</code> (default), a user who has already approved the application may be
-        /// automatically redirected to the URI specified by <code>RedirectUri</code>. If <code>true</code>, the user
+        /// done so. If <c>false</c> (default), a user who has already approved the application may be
+        /// automatically redirected to the URI specified by <see cref="RedirectUri"/>>. If <c>true</c>, the user
         /// will not be automatically redirected and will have to approve the app again.</param>
-        /// <returns>Returns an authorization URL based on the specified <code>state</code>.</returns>
+        /// <returns>An authorization URL based on the specified <paramref name="state"/>.</returns>
         /// <see>
-        ///     <cref>https://www.dropbox.com/developers-v1/core/docs#oa2-authorize</cref>
+        ///     <cref>https://www.dropbox.com/developers/documentation/http/documentation#oauth2-authorize</cref>
         /// </see>
         public string GetAuthorizationUrl(string state, bool forceReapprove) {
-            return string.Format(
-                "https://www.dropbox.com/1/oauth2/authorize?response_type={0}&client_id={1}&redirect_uri={2}&state={3}&force_reapprove={4}",
-                "code",
-                ClientId,
-                RedirectUri,
-                state,
-                forceReapprove ? "true" : "false"
-            );
+
+            if (string.IsNullOrWhiteSpace(ClientId)) throw new PropertyNotSetException(nameof(ClientId));
+            if (string.IsNullOrWhiteSpace(RedirectUri)) throw new PropertyNotSetException(nameof(RedirectUri));
+            if (string.IsNullOrWhiteSpace(state)) throw new ArgumentNullException(nameof(state));
+
+            IHttpQueryString query = new HttpQueryString {
+                {"response_type", "code"},
+                {"client_id", ClientId},
+                {"redirect_uri", RedirectUri},
+                {"state", state},
+                {"force_reapprove", forceReapprove ? "true" : "false"}
+            };
+
+            return "https://www.dropbox.com/oauth2/authorize?" + query;
+
         }
-        
+
         /// <summary>
-        /// Exchanges the specified authorization code for a refresh token and an access token.
+        /// Exchanges the specified authorization code for an access token.
         /// </summary>
         /// <param name="authCode">The authorization code received from the Dropbox OAuth dialog.</param>
-        /// <returns>Returns an access token based on the specified <code>authCode</code>.</returns>
+        /// <returns>An instance of <see cref="DropboxTokenResponse"/>.</returns>
+        /// <see>
+        ///     <cref>https://www.dropbox.com/developers/documentation/http/documentation#oauth2-token</cref>
+        /// </see>
         public DropboxTokenResponse GetAccessTokenFromAuthCode(string authCode) {
+
+            if (string.IsNullOrWhiteSpace(ClientId)) throw new PropertyNotSetException(nameof(ClientId));
+            if (string.IsNullOrWhiteSpace(ClientSecret)) throw new PropertyNotSetException(nameof(ClientSecret));
+            if (string.IsNullOrWhiteSpace(RedirectUri)) throw new PropertyNotSetException(nameof(RedirectUri));
+            if (string.IsNullOrWhiteSpace(authCode)) throw new ArgumentNullException(nameof(authCode));
 
             // Initialize the POST data
             IHttpPostData data = new HttpPostData {
@@ -168,7 +192,7 @@ namespace Skybrud.Social.Dropbox.OAuth {
             };
 
             // Make the request to the API
-            IHttpResponse response = HttpUtils.Requests.Post("https://api.dropboxapi.com/1/oauth2/token", null, data);
+            IHttpResponse response = HttpUtils.Requests.Post("https://api.dropboxapi.com/oauth2/token", null, data);
 
             // Parse the response
             return DropboxTokenResponse.ParseResponse(response);
@@ -177,11 +201,9 @@ namespace Skybrud.Social.Dropbox.OAuth {
 
         protected override void PrepareHttpRequest(IHttpRequest request) {
 
-            // Append the access token to the query string if present in the client and not already
-            // specified in the query string
-            if ((request.QueryString == null || string.IsNullOrWhiteSpace(request.QueryString["access_token"])) && string.IsNullOrWhiteSpace(AccessToken) == false) {
-                request.QueryString = request.QueryString ?? new HttpQueryString();
-                request.QueryString.Add("access_token", AccessToken);
+            // Set the "Authorization" header if an access token is present
+            if (string.IsNullOrWhiteSpace(AccessToken) == false) {
+                request.Authorization = "Bearer " + AccessToken;
             }
 
         }

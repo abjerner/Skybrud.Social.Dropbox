@@ -4,7 +4,7 @@ using Skybrud.Social.Dropbox.Objects.Authentication;
 
 namespace Skybrud.Social.Dropbox.Responses.Authentication {
     
-    public class DropboxTokenResponse : DropboxResponse<DropboxTokenResponseBody> {
+    public class DropboxTokenResponse : DropboxResponse<DropboxToken> {
         
         #region Constructors
 
@@ -29,7 +29,7 @@ namespace Skybrud.Social.Dropbox.Responses.Authentication {
 
             // Initialize the response object
             return new DropboxTokenResponse(response) {
-                Body = ParseJsonObject(response.Body, DropboxTokenResponseBody.Parse)
+                Body = ParseJsonObject(response.Body, DropboxToken.Parse)
             };
 
         }
