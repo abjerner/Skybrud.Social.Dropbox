@@ -1,6 +1,6 @@
-﻿using System;
-using System.Net;
+﻿using System.Net;
 using Skybrud.Essentials.Http;
+using Skybrud.Social.Dropbox.Exceptions;
 
 namespace Skybrud.Social.Dropbox.Responses {
 
@@ -17,7 +17,7 @@ namespace Skybrud.Social.Dropbox.Responses {
             if (response.StatusCode == HttpStatusCode.OK) return;
 
             // Now throw some exceptions
-            throw new Exception("WTF?");
+            throw new DropboxHttpException(response);
 
         }
 
