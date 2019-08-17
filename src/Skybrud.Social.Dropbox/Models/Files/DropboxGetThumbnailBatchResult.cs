@@ -4,7 +4,7 @@ using Skybrud.Essentials.Json.Extensions;
 
 namespace Skybrud.Social.Dropbox.Models.Files {
 
-    public class DropboxGetThumbnailBatchResult : JsonObjectBase {
+    public class DropboxGetThumbnailBatchResult : DropboxObject {
 
         #region Properties
 

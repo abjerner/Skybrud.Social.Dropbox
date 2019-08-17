@@ -1,11 +1,10 @@
 ﻿using System;
 using Newtonsoft.Json.Linq;
-using Skybrud.Essentials.Json;
 using Skybrud.Essentials.Json.Extensions;
 
 namespace Skybrud.Social.Dropbox.Models.Files {
 
-    public class DropboxMetadata : JsonObjectBase {
+    public class DropboxMetadata : DropboxObject {
 
         #region Properties
 

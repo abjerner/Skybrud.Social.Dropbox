@@ -1,10 +1,9 @@
 ﻿using Newtonsoft.Json.Linq;
-using Skybrud.Essentials.Json;
 using Skybrud.Essentials.Json.Extensions;
 
 namespace Skybrud.Social.Dropbox.Models.Files {
 
-    public class DropboxGetThumbnailBatchResultEntry : JsonObjectBase {
+    public class DropboxGetThumbnailBatchResultEntry : DropboxObject {
 
         #region Properties
 
