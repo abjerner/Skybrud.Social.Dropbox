@@ -1,6 +1,6 @@
 ﻿using System;
 using Skybrud.Essentials.Http;
-using Skybrud.Social.Dropbox.Objects.Authentication;
+using Skybrud.Social.Dropbox.Models.Authentication;
 
 namespace Skybrud.Social.Dropbox.Responses.Authentication {
     

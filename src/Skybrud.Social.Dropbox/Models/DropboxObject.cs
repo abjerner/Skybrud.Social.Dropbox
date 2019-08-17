@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 
-namespace Skybrud.Social.Dropbox.Objects {
+namespace Skybrud.Social.Dropbox.Models {
     
     public class DropboxObject {
 

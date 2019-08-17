@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
 using Skybrud.Essentials.Json.Extensions;
 
-namespace Skybrud.Social.Dropbox.Objects.Authentication {
+namespace Skybrud.Social.Dropbox.Models.Authentication {
     
     /// <summary>
     /// Class representing with information about an access token as received from the Dropbox API.

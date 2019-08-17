@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
 using Skybrud.Essentials.Json.Extensions;
-using Skybrud.Social.Dropbox.Objects;
 
 namespace Skybrud.Social.Dropbox.Models.Files {
 
