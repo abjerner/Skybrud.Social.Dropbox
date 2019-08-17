@@ -3,8 +3,8 @@ using Skybrud.Essentials.Common;
 using Skybrud.Essentials.Http;
 using Skybrud.Essentials.Http.Client;
 using Skybrud.Essentials.Http.Collections;
-using Skybrud.Essentials.Http.Options;
 using Skybrud.Social.Dropbox.Endpoints.Raw;
+using Skybrud.Social.Dropbox.Http;
 using Skybrud.Social.Dropbox.Responses.Authentication;
 
 namespace Skybrud.Social.Dropbox.OAuth {
@@ -79,7 +79,7 @@ namespace Skybrud.Social.Dropbox.OAuth {
         /// <param name="clientSecret">The secret of the client.</param>
         /// <param name="redirectUri">The redirect URI of the client.</param>
         public DropboxOAuthClient(long clientId, string clientSecret, string redirectUri) : this() {
-            ClientId = clientId + "";
+            ClientId = clientId + string.Empty;
             ClientSecret = clientSecret;
             RedirectUri = redirectUri;
         }
@@ -206,10 +206,16 @@ namespace Skybrud.Social.Dropbox.OAuth {
                 request.Authorization = "Bearer " + AccessToken;
             }
 
+            if (request.Url.StartsWith("/")) {
+                request.Url = "https://api.dropboxapi.com" + request.Url;
+            }
+
         }
 
-        public IHttpResponse Get(string url, IHttpGetOptions options) {
-            return DoHttpGetRequest(url, options);
+        public IHttpResponse GetResponse(IHttpRequestOptions options) {
+            HttpRequest request = options.GetRequest();
+            PrepareHttpRequest(request);
+            return request.GetResponse();
         }
 
         #endregion
