@@ -1,6 +1,6 @@
 ﻿using Skybrud.Social.Dropbox.Endpoints.Raw;
-using Skybrud.Social.Dropbox.Models.Files;
 using Skybrud.Social.Dropbox.Options.Files;
+using Skybrud.Social.Dropbox.Options.Files.Thumbnails;
 using Skybrud.Social.Dropbox.Responses.Files;
 
 namespace Skybrud.Social.Dropbox.Endpoints {
@@ -61,12 +61,55 @@ namespace Skybrud.Social.Dropbox.Endpoints {
             return DropboxListFolderResponse.Parse(Raw.ListFolder(options));
         }
 
+        /// <summary>
+        /// Get thumbnails for a list of images. Up to 25 thumbnails is allowed in a single batch.
+        /// 
+        /// This method currently supports files with the following file extensions: <c>jpg</c>, <c>jpeg</c>,
+        /// <c>png</c>, <c>tiff</c>, <c>tif</c>, <c>gif</c> and <c>bmp</c>. Photos that are larger than 20MB in size
+        /// won't be converted to a thumbnail.
+        /// </summary>
+        /// <param name="paths">An array of the paths for the images to get thumbnails for.</param>
+        /// <returns>An instance of <see cref="DropboxGetThumbnailBatchResponse"/> representing the response.</returns>
+        /// <see>
+        ///     <cref>https://www.dropbox.com/developers/documentation/http/documentation#files-get_thumbnail_batch</cref>
+        /// </see>
         public DropboxGetThumbnailBatchResponse GetThumbnailBatch(string[] paths) {
             return DropboxGetThumbnailBatchResponse.Parse(Raw.GetThumbnailBatch(paths));
         }
 
+        /// <summary>
+        /// Get thumbnails for a list of images. Up to 25 thumbnails is allowed in a single batch.
+        /// 
+        /// This method currently supports files with the following file extensions: <c>jpg</c>, <c>jpeg</c>,
+        /// <c>png</c>, <c>tiff</c>, <c>tif</c>, <c>gif</c> and <c>bmp</c>. Photos that are larger than 20MB in size
+        /// won't be converted to a thumbnail.
+        /// </summary>
+        /// <param name="paths">An array of the paths for the images to get thumbnails for.</param>
+        /// <param name="format">The format for the thumbnail image, <see cref="DropboxThumbnailFormat.Jpeg"/> or <see cref="DropboxThumbnailFormat.Png"/>. For images that are photos, <see cref="DropboxThumbnailFormat.Jpeg"/> should be preferred, while <see cref="DropboxThumbnailFormat.Png"/> is better for screenshots and digital arts.</param>
+        /// <param name="size">The size for the thumbnail image.</param>
+        /// <param name="mode">How to resize and crop the image to achieve the desired size.</param>
+        /// <returns>An instance of <see cref="DropboxGetThumbnailBatchResponse"/> representing the response.</returns>
+        /// <see>
+        ///     <cref>https://www.dropbox.com/developers/documentation/http/documentation#files-get_thumbnail_batch</cref>
+        /// </see>
         public DropboxGetThumbnailBatchResponse GetThumbnailBatch(string[] paths, DropboxThumbnailFormat format, DropboxThumbnailSize size, DropboxThumbnailMode mode) {
             return DropboxGetThumbnailBatchResponse.Parse(Raw.GetThumbnailBatch(paths, format, size, mode));
+        }
+
+        /// <summary>
+        /// Get thumbnails for a list of images. Up to 25 thumbnails is allowed in a single batch.
+        /// 
+        /// This method currently supports files with the following file extensions: <c>jpg</c>, <c>jpeg</c>,
+        /// <c>png</c>, <c>tiff</c>, <c>tif</c>, <c>gif</c> and <c>bmp</c>. Photos that are larger than 20MB in size
+        /// won't be converted to a thumbnail.
+        /// </summary>
+        /// <param name="options">The options for the request to the Dropbox API.</param>
+        /// <returns>An instance of <see cref="DropboxGetThumbnailBatchResponse"/> representing the response.</returns>
+        /// <see>
+        ///     <cref>https://www.dropbox.com/developers/documentation/http/documentation#files-get_thumbnail_batch</cref>
+        /// </see>
+        public DropboxGetThumbnailBatchResponse GetThumbnailBatch(DropboxGetThumbnailBatchOptions options) {
+            return DropboxGetThumbnailBatchResponse.Parse(Raw.GetThumbnailBatch(options));
         }
 
         /// <summary>

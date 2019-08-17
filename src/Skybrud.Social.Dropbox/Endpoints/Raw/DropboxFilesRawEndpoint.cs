@@ -1,12 +1,9 @@
 ﻿using System;
-using Newtonsoft.Json.Linq;
 using Skybrud.Essentials.Common;
 using Skybrud.Essentials.Http;
-using Skybrud.Essentials.Http.Collections;
-using Skybrud.Essentials.Strings.Extensions;
-using Skybrud.Social.Dropbox.Models.Files;
 using Skybrud.Social.Dropbox.OAuth;
 using Skybrud.Social.Dropbox.Options.Files;
+using Skybrud.Social.Dropbox.Options.Files.Thumbnails;
 
 namespace Skybrud.Social.Dropbox.Endpoints.Raw {
 
@@ -66,28 +63,59 @@ namespace Skybrud.Social.Dropbox.Endpoints.Raw {
             return Client.GetResponse(options);
         }
 
+        /// <summary>
+        /// Get thumbnails for a list of images. Up to 25 thumbnails is allowed in a single batch.
+        /// 
+        /// This method currently supports files with the following file extensions: <c>jpg</c>, <c>jpeg</c>,
+        /// <c>png</c>, <c>tiff</c>, <c>tif</c>, <c>gif</c> and <c>bmp</c>. Photos that are larger than 20MB in size
+        /// won't be converted to a thumbnail.
+        /// </summary>
+        /// <param name="paths">An array of the paths for the images to get thumbnails for.</param>
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
+        /// <see>
+        ///     <cref>https://www.dropbox.com/developers/documentation/http/documentation#files-get_thumbnail_batch</cref>
+        /// </see>
         public IHttpResponse GetThumbnailBatch(string[] paths) {
+            if (paths == null) throw new ArgumentNullException(nameof(paths));
             return GetThumbnailBatch(paths, DropboxThumbnailFormat.Jpeg, DropboxThumbnailSize.W64H64, DropboxThumbnailMode.Strict);
         }
 
+        /// <summary>
+        /// Get thumbnails for a list of images. Up to 25 thumbnails is allowed in a single batch.
+        /// 
+        /// This method currently supports files with the following file extensions: <c>jpg</c>, <c>jpeg</c>,
+        /// <c>png</c>, <c>tiff</c>, <c>tif</c>, <c>gif</c> and <c>bmp</c>. Photos that are larger than 20MB in size
+        /// won't be converted to a thumbnail.
+        /// </summary>
+        /// <param name="paths">An array of the paths for the images to get thumbnails for.</param>
+        /// <param name="format">The format for the thumbnail image, <see cref="DropboxThumbnailFormat.Jpeg"/> or <see cref="DropboxThumbnailFormat.Png"/>. For images that are photos, <see cref="DropboxThumbnailFormat.Jpeg"/> should be preferred, while <see cref="DropboxThumbnailFormat.Png"/> is better for screenshots and digital arts.</param>
+        /// <param name="size">The size for the thumbnail image.</param>
+        /// <param name="mode">How to resize and crop the image to achieve the desired size.</param>
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
+        /// <see>
+        ///     <cref>https://www.dropbox.com/developers/documentation/http/documentation#files-get_thumbnail_batch</cref>
+        /// </see>
         public IHttpResponse GetThumbnailBatch(string[] paths, DropboxThumbnailFormat format, DropboxThumbnailSize size, DropboxThumbnailMode mode) {
+            if (paths == null) throw new ArgumentNullException(nameof(paths));
+            return GetThumbnailBatch(new DropboxGetThumbnailBatchOptions(paths, format, size, mode));
+        }
 
-            JObject body = new JObject();
-
-            JArray entries = new JArray();
-            body.Add("entries", entries);
-
-            foreach (string path in paths) {
-                entries.Add(new JObject {
-                    {"path", path},
-                    {"format", format.ToLower()},
-                    {"size", size.ToLower()},
-                    {"mode", mode.ToUnderscore()}
-                });
-            }
-
-            return Client.DoHttpPostRequest("https://content.dropboxapi.com/2/files/get_thumbnail_batch", default(IHttpQueryString), body);
-
+        /// <summary>
+        /// Get thumbnails for a list of images. Up to 25 thumbnails is allowed in a single batch.
+        /// 
+        /// This method currently supports files with the following file extensions: <c>jpg</c>, <c>jpeg</c>,
+        /// <c>png</c>, <c>tiff</c>, <c>tif</c>, <c>gif</c> and <c>bmp</c>. Photos that are larger than 20MB in size
+        /// won't be converted to a thumbnail.
+        /// </summary>
+        /// <param name="options">The options for the request to the Dropbox API.</param>
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
+        /// <see>
+        ///     <cref>https://www.dropbox.com/developers/documentation/http/documentation#files-get_thumbnail_batch</cref>
+        /// </see>
+        public IHttpResponse GetThumbnailBatch(DropboxGetThumbnailBatchOptions options) {
+            if (options == null) throw new ArgumentNullException(nameof(options));
+            if (options.Entries == null) throw new PropertyNotSetException(nameof(options.Entries));
+            return Client.GetResponse(options);
         }
 
         /// <summary>

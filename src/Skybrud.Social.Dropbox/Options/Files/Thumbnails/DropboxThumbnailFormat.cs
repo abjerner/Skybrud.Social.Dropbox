@@ -1,4 +1,4 @@
-﻿namespace Skybrud.Social.Dropbox.Models.Files {
+﻿namespace Skybrud.Social.Dropbox.Options.Files.Thumbnails {
 
     public enum DropboxThumbnailFormat {
         Jpeg,
