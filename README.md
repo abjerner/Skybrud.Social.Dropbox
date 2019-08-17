@@ -32,6 +32,7 @@ The [**releases page**][Releases] lists all releases, and each there will be som
 You can find documentation and examples on how to use this package at the [**Skybrud.Social website**][Website]. The package isn't yet fully documented, so feel free to [**create an issue**][Issues] if I've missed something.
 
 [Website]: http://social.skybrud.dk/dropbox/
+[NuGetPackage]: https://www.nuget.org/packages/Skybrud.Social.Dropbox
 [GitHubRelease]: https://github.com/abjerner/Skybrud.Social.Dropbox/releases/latest
 [Releases]: https://github.com/abjerner/Skybrud.Social.Dropbox/releases
 [Issues]: https://github.com/abjerner/Skybrud.Social.Dropbox/issues
