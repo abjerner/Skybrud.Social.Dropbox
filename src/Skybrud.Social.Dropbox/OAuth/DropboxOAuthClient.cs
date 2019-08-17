@@ -8,7 +8,10 @@ using Skybrud.Social.Dropbox.Http;
 using Skybrud.Social.Dropbox.Responses.Authentication;
 
 namespace Skybrud.Social.Dropbox.OAuth {
-    
+
+    /// <summary>
+    /// Class for handling the raw communication with the Dropbox API as well as any OAuth 2.0 communication.
+    /// </summary>
     public class DropboxOAuthClient : HttpClient {
 
         #region Properties
@@ -39,6 +42,9 @@ namespace Skybrud.Social.Dropbox.OAuth {
 
         #region Endpoints
 
+        /// <summary>
+        /// Gets a reference to the raw <strong>Files</strong> endpoint.
+        /// </summary>
         public DropboxFilesRawEndpoint Files { get; }
         
         #endregion
@@ -199,6 +205,7 @@ namespace Skybrud.Social.Dropbox.OAuth {
 
         }
 
+        /// <inheritdoc />
         protected override void PrepareHttpRequest(IHttpRequest request) {
 
             // Set the "Authorization" header if an access token is present
@@ -212,6 +219,11 @@ namespace Skybrud.Social.Dropbox.OAuth {
 
         }
 
+        /// <summary>
+        /// Gets the response of the request as described by the specified <paramref name="options"/>.
+        /// </summary>
+        /// <param name="options">The options describing the request.</param>
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
         public IHttpResponse GetResponse(IHttpRequestOptions options) {
             HttpRequest request = options.GetRequest();
             PrepareHttpRequest(request);

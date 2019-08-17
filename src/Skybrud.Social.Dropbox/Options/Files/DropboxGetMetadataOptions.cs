@@ -25,6 +25,9 @@ namespace Skybrud.Social.Dropbox.Options.Files {
         /// </summary>
         public bool IncludeMediaInfo { get; set; }
 
+        /// <summary>
+        /// Gets whether deleted files should be included in the response. Default is <c>false</c>.
+        /// </summary>
         public bool IncludeDeleted { get; set; }
 
         /// <summary>
@@ -32,11 +35,12 @@ namespace Skybrud.Social.Dropbox.Options.Files {
         /// explicit members. Default is <c>false</c>.
         /// </summary>
         public bool IncludeHasExplicitSharedMembers { get; set; }
-        
+
         #endregion
 
         #region Member methods
 
+        /// <inheritdoc />
         public HttpRequest GetRequest() {
 
             if (Path == null) throw new PropertyNotSetException(nameof(Path));

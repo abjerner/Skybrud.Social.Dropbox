@@ -13,13 +13,20 @@ namespace Skybrud.Social.Dropbox.Models.Files {
 
         #region Properties
 
+        /// <summary>
+        /// Gets sharing information about the folder or a parent folder is shared.
+        /// </summary>
         public DropboxFolderSharingInfo SharingInfo { get; }
 
         #endregion
 
         #region Constructors
 
-        internal DropboxFolderMetadata(JObject obj) : base(obj) {
+        /// <summary>
+        /// Initializes a new instance based on the specified <paramref name="obj"/>.
+        /// </summary>
+        /// <param name="obj">The instance of <see cref="JObject"/> to parse.</param>
+        protected internal DropboxFolderMetadata(JObject obj) : base(obj) {
             SharingInfo = obj.GetObject("sharing_info", DropboxFolderSharingInfo.Parse);
         }
 

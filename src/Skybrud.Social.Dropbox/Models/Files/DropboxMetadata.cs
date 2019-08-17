@@ -4,6 +4,9 @@ using Skybrud.Essentials.Json.Extensions;
 
 namespace Skybrud.Social.Dropbox.Models.Files {
 
+    /// <summary>
+    /// Base class for metadata of Dropbox files and folders.
+    /// </summary>
     public class DropboxMetadata : DropboxObject {
 
         #region Properties
@@ -32,6 +35,10 @@ namespace Skybrud.Social.Dropbox.Models.Files {
 
         #region Constructors
 
+        /// <summary>
+        /// Initializes a new instance based on the specified <paramref name="obj"/>.
+        /// </summary>
+        /// <param name="obj">The instance of <see cref="JObject"/> to parse.</param>
         protected DropboxMetadata(JObject obj) : base(obj) {
             Name = obj.GetString("name");
             Id = obj.GetString("id");

@@ -17,7 +17,7 @@ namespace Skybrud.Social.Dropbox.Exceptions {
         public IHttpResponse Response { get; }
 
         /// <summary>
-        /// Gets the HTTP status code returned by the Toggl API.
+        /// Gets the HTTP status code returned by the Dropbox API.
         /// </summary>
         public HttpStatusCode StatusCode => Response.StatusCode;
 

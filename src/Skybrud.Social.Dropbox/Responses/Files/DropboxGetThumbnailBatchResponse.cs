@@ -4,6 +4,12 @@ using Skybrud.Social.Dropbox.Models.Files;
 
 namespace Skybrud.Social.Dropbox.Responses.Files {
 
+    /// <summary>
+    /// Class representing the response of a request to get a batch of thumbnails.
+    /// </summary>
+    /// <see>
+    ///     <cref>https://www.dropbox.com/developers/documentation/http/documentation#files-get_thumbnail_batch</cref>
+    /// </see>
     public class DropboxGetThumbnailBatchResponse : DropboxResponse<DropboxGetThumbnailBatchResult> {
         
         #region Constructors

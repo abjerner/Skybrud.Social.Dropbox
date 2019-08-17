@@ -46,7 +46,11 @@ namespace Skybrud.Social.Dropbox.Models.Files {
 
         #region Constructors
 
-        internal DropboxFileMetadata(JObject obj) : base(obj) {
+        /// <summary>
+        /// Initializes a new instance based on the specified <paramref name="obj"/>.
+        /// </summary>
+        /// <param name="obj">The instance of <see cref="JObject"/> to parse.</param>
+        protected internal DropboxFileMetadata(JObject obj) : base(obj) {
             ClientModified = obj.GetString("client_modified", EssentialsTime.Parse);
             ServerModified = obj.GetString("server_modified", EssentialsTime.Parse);
             Rev = obj.GetString("rev");
@@ -68,7 +72,6 @@ namespace Skybrud.Social.Dropbox.Models.Files {
         }
 
         #endregion
-
 
     }
 

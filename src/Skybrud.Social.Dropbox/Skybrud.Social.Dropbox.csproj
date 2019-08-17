@@ -3,10 +3,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net47</TargetFramework>
     <TargetFrameworks>netstandard1.3;net45;net46;net47</TargetFrameworks>
     <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
-    <RunBuildTargets>true</RunBuildTargets>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -22,7 +20,7 @@
   
   <PropertyGroup>
     <PackageTags>Dropbox, API, Skybrud, Social, JSON</PackageTags>
-    <PackageLicenseUrl>https://github.com/abjerner/Skybrud.Social.Dropbox/blob/master/LICENSE.md</PackageLicenseUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/abjerner/Skybrud.Social.Dropbox</PackageProjectUrl>
     <PackageIconUrl>http://www.skybrud.dk/img/5431sk/icon/favicon.ico</PackageIconUrl>
   </PropertyGroup>
@@ -39,5 +37,13 @@
     <PackageReference Include="Skybrud.Essentials" Version="1.1.15" />
     <PackageReference Include="Skybrud.Essentials.Http" Version="1.0.6" />
   </ItemGroup>
+
+  <PropertyGroup>
+    <DocumentationFile>bin\$(ConfigurationName)\$(TargetFramework)\Skybrud.Social.Dropbox.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(ConfigurationName)'=='Release' AND '$(BuildTools)'=='1'">
+    <Exec Command="&quot;$(ProjectDir)..\build\Skybrud.BuildTools.Tasks.exe&quot; &quot;postBuild&quot; &quot;$(ConfigurationName)&quot; &quot;$(ProjectPath)&quot; &quot;$(TargetPath)&quot;" />
+  </Target>
 
 </Project>

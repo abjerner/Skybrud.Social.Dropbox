@@ -14,7 +14,7 @@ namespace Skybrud.Social.Dropbox {
         /// <summary>
         /// Gets a reference to the underlying OAuth client.
         /// </summary>
-        public DropboxOAuthClient Client { get; set; }
+        public DropboxOAuthClient Client { get; }
 
         /// <summary>
         /// Gets a reference to the <strong>Files</strong> endpoint.

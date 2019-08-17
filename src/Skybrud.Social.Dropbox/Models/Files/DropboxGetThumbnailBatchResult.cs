@@ -1,9 +1,11 @@
 ﻿using Newtonsoft.Json.Linq;
-using Skybrud.Essentials.Json;
 using Skybrud.Essentials.Json.Extensions;
 
 namespace Skybrud.Social.Dropbox.Models.Files {
 
+    /// <summary>
+    /// Class representing the result of a request to get thumbnails for a collection of images.
+    /// </summary>
     public class DropboxGetThumbnailBatchResult : DropboxObject {
 
         #region Properties
@@ -12,11 +14,15 @@ namespace Skybrud.Social.Dropbox.Models.Files {
         /// Gets a list of files and their thumbnails
         /// </summary>
         public DropboxGetThumbnailBatchResultEntry[] Entries { get; }
-        
+
         #endregion
 
         #region Constructors
 
+        /// <summary>
+        /// Initializes a new instance based on the specified <paramref name="obj"/>.
+        /// </summary>
+        /// <param name="obj">The instance of <see cref="JObject"/> to parse.</param>
         protected DropboxGetThumbnailBatchResult(JObject obj) : base(obj) {
             Entries = obj.GetArrayItems("entries", DropboxGetThumbnailBatchResultEntry.Parse);
         }

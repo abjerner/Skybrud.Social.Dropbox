@@ -45,7 +45,11 @@ namespace Skybrud.Social.Dropbox.Models.Files {
 
         #region Constructors
 
-        private DropboxFolderSharingInfo(JObject obj) : base(obj) {
+        /// <summary>
+        /// Initializes a new instance based on the specified <paramref name="obj"/>.
+        /// </summary>
+        /// <param name="obj">The instance of <see cref="JObject"/> to parse.</param>
+        protected DropboxFolderSharingInfo(JObject obj) : base(obj) {
             ReadOnly = obj.GetBoolean("read_only");
             ParentSharedFolderId = obj.GetString("parent_shared_folder_id");
             SharedFolderId = obj.GetString("shared_folder_id");

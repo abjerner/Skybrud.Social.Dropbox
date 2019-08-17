@@ -31,6 +31,14 @@ namespace Skybrud.Social.Dropbox.Endpoints.Raw {
 
         #region Member methods
 
+        /// <summary>
+        /// Gets metadata for a file or folder.
+        /// </summary>
+        /// <param name="options">The options for the request to the Dropbox API.</param>
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
+        /// <see>
+        ///     <cref>https://www.dropbox.com/developers/documentation/http/documentation#files-get_metadata</cref>
+        /// </see>
         public IHttpResponse GetMetadata(DropboxGetMetadataOptions options) {
             if (options == null) throw new ArgumentNullException(nameof(options));
             return Client.GetResponse(options);

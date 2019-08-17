@@ -3,6 +3,9 @@ using Skybrud.Essentials.Json.Extensions;
 
 namespace Skybrud.Social.Dropbox.Models.Files {
 
+    /// <summary>
+    /// Class representing the result of a request to get the contents of a Dropbox folder.
+    /// </summary>
     public class DropboxListFolderResult : DropboxObject {
 
         #region Properties
@@ -12,6 +15,9 @@ namespace Skybrud.Social.Dropbox.Models.Files {
         /// </summary>
         public DropboxMetadata[] Entries { get; }
 
+        /// <summary>
+        /// Gets the cursor.
+        /// </summary>
         public string Cursor { get; }
 
         /// <summary>
@@ -23,7 +29,11 @@ namespace Skybrud.Social.Dropbox.Models.Files {
 
         #region Constructors
 
-        private DropboxListFolderResult(JObject obj) : base(obj) {
+        /// <summary>
+        /// Initializes a new instance based on the specified <paramref name="obj"/>.
+        /// </summary>
+        /// <param name="obj">The instance of <see cref="JObject"/> to parse.</param>
+        protected DropboxListFolderResult(JObject obj) : base(obj) {
             Entries = obj.GetArrayItems("entries", DropboxMetadata.Parse);
             Cursor = obj.GetString("cursor");
             HasMore = obj.GetBoolean("has_more");

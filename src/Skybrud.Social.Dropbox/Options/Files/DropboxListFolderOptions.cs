@@ -5,7 +5,7 @@ using Skybrud.Social.Dropbox.Http;
 namespace Skybrud.Social.Dropbox.Options.Files {
     
     /// <summary>
-    /// Options for request to get the contents of a Dropboxo folder.
+    /// Options for request to get the contents of a Dropbox folder.
     /// </summary>
     /// <see>
     ///     <cref>https://www.dropbox.com/developers/documentation/http/documentation#files-list_folder</cref>
@@ -36,8 +36,15 @@ namespace Skybrud.Social.Dropbox.Options.Files {
 
         #region Properties
 
+        /// <summary>
+        /// Initializes a new instance with default options.
+        /// </summary>
         public DropboxListFolderOptions() { }
 
+        /// <summary>
+        /// Initializes a new instance based on the specified <paramref name="path"/>.
+        /// </summary>
+        /// <param name="path">The path, ID or revision of the file to get metadata for.</param>
         public DropboxListFolderOptions(string path) {
             Path = path;
         }
@@ -46,6 +53,7 @@ namespace Skybrud.Social.Dropbox.Options.Files {
 
         #region Member methods
 
+        /// <inheritdoc />
         public HttpRequest GetRequest() {
             
             JObject body = new JObject {

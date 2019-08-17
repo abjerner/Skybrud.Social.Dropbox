@@ -11,6 +11,10 @@ namespace Skybrud.Social.Dropbox.Responses {
 
         #region Constructor
 
+        /// <summary>
+        /// Initializes a new instance based on the specified <paramref name="response"/>.
+        /// </summary>
+        /// <param name="response">The response.</param>
         protected DropboxResponse(IHttpResponse response) : base(response) {
 
             // Skip error checking if the server responds with an OK status code
@@ -41,6 +45,10 @@ namespace Skybrud.Social.Dropbox.Responses {
 
         #region Constructors
 
+        /// <summary>
+        /// Initializes a new instance based on the specified <paramref name="response"/>.
+        /// </summary>
+        /// <param name="response">The response.</param>
         protected DropboxResponse(IHttpResponse response) : base(response) { }
 
         #endregion

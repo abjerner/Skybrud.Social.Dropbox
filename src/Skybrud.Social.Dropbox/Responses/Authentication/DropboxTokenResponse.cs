@@ -3,7 +3,10 @@ using Skybrud.Essentials.Http;
 using Skybrud.Social.Dropbox.Models.Authentication;
 
 namespace Skybrud.Social.Dropbox.Responses.Authentication {
-    
+
+    /// <summary>
+    /// Class representing a response with information about an access token.
+    /// </summary>
     public class DropboxTokenResponse : DropboxResponse<DropboxToken> {
         
         #region Constructors
