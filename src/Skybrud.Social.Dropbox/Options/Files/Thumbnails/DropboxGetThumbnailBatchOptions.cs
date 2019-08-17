@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Skybrud.Essentials.Common;
@@ -56,15 +55,8 @@ namespace Skybrud.Social.Dropbox.Options.Files.Thumbnails {
         #region Member methods
 
         public HttpRequest GetRequest() {
-
             if (Entries == null) throw new PropertyNotSetException(nameof(Entries));
-
-            JObject body = JObject.FromObject(this);
-
-            throw new Exception(body + "");
-            
-            return HttpRequest.Post("https://content.dropboxapi.com/2/files/get_thumbnail_batch", body);
-
+            return HttpRequest.Post("https://content.dropboxapi.com/2/files/get_thumbnail_batch", JObject.FromObject(this));
         }
 
         #endregion
