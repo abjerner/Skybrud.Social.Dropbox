@@ -8,30 +8,22 @@ namespace Skybrud.Social.Dropbox.Responses.Authentication {
         
         #region Constructors
 
-        private DropboxTokenResponse(IHttpResponse response) : base(response) { }
+        private DropboxTokenResponse(IHttpResponse response) : base(response) {
+            Body = ParseJsonObject(response.Body, DropboxToken.Parse);
+        }
 
         #endregion
 
         #region Static methods
 
         /// <summary>
-        /// Parses the specified <code>response</code> into an instance of <code>DropboxTokenResponse</code>.
+        /// Parses the specified <paramref name="response"/> into an instance of <see cref="DropboxTokenResponse"/>.
         /// </summary>
         /// <param name="response">The response to be parsed.</param>
-        /// <returns>Returns an instance of <code>DropboxTokenResponse</code>.</returns>
+        /// <returns>An instance of <see cref="DropboxTokenResponse"/>.</returns>
         public static DropboxTokenResponse ParseResponse(IHttpResponse response) {
-
-            // Some input validation
             if (response == null) throw new ArgumentNullException(nameof(response));
-            
-            // Validate the response
-            ValidateResponse(response);
-
-            // Initialize the response object
-            return new DropboxTokenResponse(response) {
-                Body = ParseJsonObject(response.Body, DropboxToken.Parse)
-            };
-
+            return new DropboxTokenResponse(response);
         }
 
         #endregion

@@ -11,17 +11,7 @@ namespace Skybrud.Social.Dropbox.Responses {
 
         #region Constructor
 
-        protected DropboxResponse(IHttpResponse response) : base(response) { }
-
-        #endregion
-
-        #region Static methods
-
-        /// <summary>
-        /// Validates the specified <code>response</code>.
-        /// </summary>
-        /// <param name="response">The response to be validated.</param>
-        public static void ValidateResponse(IHttpResponse response) {
+        protected DropboxResponse(IHttpResponse response) : base(response) {
 
             // Skip error checking if the server responds with an OK status code
             if (response.StatusCode == HttpStatusCode.OK) return;

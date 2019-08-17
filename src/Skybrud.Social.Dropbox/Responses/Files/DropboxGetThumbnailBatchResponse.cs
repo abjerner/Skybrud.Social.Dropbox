@@ -3,6 +3,7 @@ using Skybrud.Essentials.Http;
 using Skybrud.Social.Dropbox.Models.Files;
 
 namespace Skybrud.Social.Dropbox.Responses.Files {
+
     public class DropboxGetThumbnailBatchResponse : DropboxResponse<DropboxGetThumbnailBatchResult> {
         
         #region Constructors
