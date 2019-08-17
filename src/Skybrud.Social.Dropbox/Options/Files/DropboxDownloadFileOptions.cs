@@ -6,7 +6,7 @@ using Skybrud.Social.Dropbox.Http;
 
 namespace Skybrud.Social.Dropbox.Options.Files {
 
-    public class DropboxDownloadFileOptions : HttpRequestOptionsBase, IHttpRequestOptions {
+    public class DropboxDownloadFileOptions : IHttpRequestOptions {
 
         #region Properties
 
@@ -29,7 +29,7 @@ namespace Skybrud.Social.Dropbox.Options.Files {
 
         #region Member methods
 
-        public override HttpRequest GetRequest() {
+        public HttpRequest GetRequest() {
 
             if (Path == null) throw new PropertyNotSetException(nameof(Path));
 
@@ -37,9 +37,10 @@ namespace Skybrud.Social.Dropbox.Options.Files {
                 {"path", Path}
             };
 
-            HttpRequest request = Post("https://content.dropboxapi.com/2/files/download");
+            HttpRequest request = new HttpRequest(HttpMethod.Post, "https://content.dropboxapi.com/2/files/download") {
+                ContentType = "text/plain"
+            };
 
-            request.ContentType = "text/plain";
             request.Headers.Add("Dropbox-API-Arg", body.ToString(Formatting.None));
 
             return request;

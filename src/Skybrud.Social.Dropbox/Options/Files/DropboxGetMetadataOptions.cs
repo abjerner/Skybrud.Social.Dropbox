@@ -11,7 +11,7 @@ namespace Skybrud.Social.Dropbox.Options.Files {
     /// <see>
     ///     <cref>https://www.dropbox.com/developers/documentation/http/documentation#files-get_metadata</cref>
     /// </see>
-    public class DropboxGetMetadataOptions : HttpRequestOptionsBase, IHttpRequestOptions {
+    public class DropboxGetMetadataOptions : IHttpRequestOptions {
 
         #region Properties
 
@@ -37,7 +37,7 @@ namespace Skybrud.Social.Dropbox.Options.Files {
 
         #region Member methods
 
-        public override HttpRequest GetRequest() {
+        public HttpRequest GetRequest() {
 
             if (Path == null) throw new PropertyNotSetException(nameof(Path));
 
@@ -49,7 +49,7 @@ namespace Skybrud.Social.Dropbox.Options.Files {
             if (IncludeDeleted) body.Add("include_deleted", "true");
             if (IncludeHasExplicitSharedMembers) body.Add("include_has_explicit_shared_members", "true");
 
-            return Post("/2/files/get_metadata", body);
+            return HttpRequest.Post("/2/files/get_metadata", body);
 
         }
 

@@ -10,7 +10,7 @@ namespace Skybrud.Social.Dropbox.Options.Files {
     /// <see>
     ///     <cref>https://www.dropbox.com/developers/documentation/http/documentation#files-list_folder</cref>
     /// </see>
-    public class DropboxListFolderOptions : HttpRequestOptionsBase, IHttpRequestOptions {
+    public class DropboxListFolderOptions : IHttpRequestOptions {
         
         #region Properties
 
@@ -46,7 +46,7 @@ namespace Skybrud.Social.Dropbox.Options.Files {
 
         #region Member methods
 
-        public override HttpRequest GetRequest() {
+        public HttpRequest GetRequest() {
             
             JObject body = new JObject {
                 {"path", Path ?? string.Empty}
@@ -55,7 +55,7 @@ namespace Skybrud.Social.Dropbox.Options.Files {
             if (IncludeDeleted) body.Add("include_deleted", "true");
             if (Limit > 0) body.Add("limit", Limit);
 
-            return Post("/2/files/list_folder", body);
+            return HttpRequest.Post("/2/files/list_folder", body);
 
         }
 
